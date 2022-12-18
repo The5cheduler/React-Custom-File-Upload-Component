@@ -10,6 +10,8 @@ function Uploadcare() {
       console.log(info);
     };
 
+    const acceptedFileTypes = "image/jpg,image/jpeg,image/png"
+
     const fileSizeLimit = () => {
         return function (fileInfo: FileInfo) {
           console.log(fileInfo);
@@ -22,6 +24,7 @@ function Uploadcare() {
       };
 
     const validators = [fileSizeLimit()];
+    const maxUploadLimit = 5
 
     const uploadFileSelect = (file) => {
         console.log(`file changed ${file}`);
@@ -38,14 +41,16 @@ function Uploadcare() {
    <div className="ucare">
         <div className="upload">
           <label htmlFor="file">Please upload an Image</label>{""}
-          {/* <Widget
+          <Widget
             publicKey={process.env.REACT_APP_UPLOADCARE_API_PUBLIC_KEY}
             id="file"
             Clearable={true}
             onChange={(info) => uploadFileChange(info)}
             onFileSelect={(file) => uploadFileSelect(file)}
             validators={validators}
-          /> */}
+            multipleMax={maxUploadLimit}
+            inputAcceptTypes={acceptedFileTypes}
+          />
         </div>
         <FilesList updateList={updateList} />
       </div>
