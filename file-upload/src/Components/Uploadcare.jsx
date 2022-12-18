@@ -52,7 +52,7 @@ function Uploadcare() {
 
       <div className="ucare">
         <div className="upload">
-          <label htmlFor="file">Please upload an Image</label>{""}
+          <label htmlFor="file"></label>{""}
           <Widget
             publicKey={process.env.REACT_APP_UPLOADCARE_API_PUBLIC_KEY}
             id="file"
