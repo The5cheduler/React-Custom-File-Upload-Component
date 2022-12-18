@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { Widget } from "@uploadcare/react-widget";
 import FilesList from "./FilesList";
+import Alert from "react-bootstrap/Alert";
 
 function Uploadcare() {
 
@@ -24,7 +25,7 @@ function Uploadcare() {
       };
 
     const validators = [fileSizeLimit()];
-    const maxUploadLimit = 5
+    const maxUploadLimit = 1
 
     const uploadFileSelect = (file) => {
         console.log(`file changed ${file}`);
@@ -38,7 +39,18 @@ function Uploadcare() {
 
   return (
    <>
-   <div className="ucare">
+    {showSizeAlert && (
+        <Alert
+          variant="danger"
+          onClose={() => setShowSizeAlert(false)}
+          dismissible
+        >
+          <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+          <p>You can't upload files bigger than 5MB.</p>
+        </Alert>
+      )}
+
+      <div className="ucare">
         <div className="upload">
           <label htmlFor="file">Please upload an Image</label>{""}
           <Widget
