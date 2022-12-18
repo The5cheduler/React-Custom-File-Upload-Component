@@ -1,6 +1,6 @@
 import React from 'react'
 
-function FilesList() {
+function FilesList(props) {
   return (
     <div>FilesList</div>
   )
