@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css';
-import Uploadcare from './Components/Uploadcare'
+import Uploadcare from './Uploadcare'
 
 function App() {
   return <Uploadcare/>;

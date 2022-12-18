@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import ReactDOM from 'react-dom'
 import { Widget } from "@uploadcare/react-widget";
 import FilesList from "./FilesList";
 
@@ -38,15 +37,15 @@ function Uploadcare() {
    <>
    <div className="ucare">
         <div className="upload">
-          <label htmlFor="file">Please upload an Image</label>{" "}
-          <Widget
+          <label htmlFor="file">Please upload an Image</label>{""}
+          {/* <Widget
             publicKey={process.env.REACT_APP_UPLOADCARE_API_PUBLIC_KEY}
             id="file"
             Clearable={true}
             onChange={(info) => uploadFileChange(info)}
             onFileSelect={(file) => uploadFileSelect(file)}
             validators={validators}
-          />
+          /> */}
         </div>
         <FilesList updateList={updateList} />
       </div>
