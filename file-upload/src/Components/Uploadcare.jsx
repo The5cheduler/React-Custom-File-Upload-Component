@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom'
 import { Widget } from "@uploadcare/react-widget";
-import FilesList from "./Components/FilesList";
+import FilesList from "./FilesList";
 
 function Uploadcare() {
 
