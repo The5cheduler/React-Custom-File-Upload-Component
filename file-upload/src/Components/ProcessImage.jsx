@@ -8,8 +8,8 @@ const ProcessImage = ({file}) => {
 
   return(
     <div>
-      <div className="uc-ip-preview">
-        <img src={imageSrc} alt={file.original_filename} />
+      <div className="font-loader uc-ip-preview text-center">
+        <img src={imageSrc} alt={file.original_filename} width="auto"/>
       </div>
       <div className="uc-ip-actions-grp">
         <div className="uc-ip-actions">

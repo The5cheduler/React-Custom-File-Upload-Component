@@ -4,6 +4,8 @@ import { FiEdit, FiTrash2, FiDownload } from "react-icons/fi";
 import ProcessImage from "./ProcessImage";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import ImagePreview from "./ImagePreview";
+
 
 function FilesList({ updateList }) {
   const URI = "https://api.uploadcare.com/files/";
@@ -14,13 +16,18 @@ function FilesList({ updateList }) {
   const [loading, setLoading] = useState(true);
   const [files, setFiles] = useState([]);
   const [fileToProcess, setFileToProcess] = useState(null);
+  const [fileToPreview, setFileToPreview] = useState(null);
+  const [previewTitle, setPreviewTitle] = useState('');
   const [show, setShow] = useState(false);
+  const [preview, setPreview] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const handlePreviewClose = () => setPreview(false);
+  const handlePreview = () => setPreview(true);
+
   useEffect(() => {
-    console.log(headers)
     fetch(URI, { headers })
       .then((response) => response.json())
       .then((data) => {
@@ -29,8 +36,15 @@ function FilesList({ updateList }) {
       });
   }, [updateList]);
 
-  const downloadFile = (fileId) => {
+  const downloadFile = (file) => {
+   saveAs(file.original_file_url, file.original_filename, file.mime_type);
+  };
 
+  const previewImage = (file) => {
+    console.log(file);
+    setFileToPreview(file);
+    setPreviewTitle(file.original_filename);
+    handlePreview();
   };
 
   const deleteFile = (fileId) => {
@@ -56,20 +70,20 @@ function FilesList({ updateList }) {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p className="font-loader">Loading...</p>;
   }
 
   if (files.length === 0) {
-    return <p className="no-file">So empty here, please upload.</p>;
+    return <p className="no-file font-loader text-center">So empty here, please upload.</p>;
   }
 
   return (
-    <div className="file-list">
-      <Modal show={show} onHide={handleClose}>
+    <div className="file-list font-loader" >
+      <Modal show={show} onHide={handleClose} dialogClassName="my-modal">
         <Modal.Header closeButton>
-          <Modal.Title>Process Image</Modal.Title>
+          <Modal.Title className="font-loader text-center">Process Image</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="text-center">
           <ProcessImage file={fileToProcess} />
         </Modal.Body>
         <Modal.Footer>
@@ -81,27 +95,47 @@ function FilesList({ updateList }) {
           </Button>
         </Modal.Footer>
       </Modal>
-      <h1 style={{}}>Gallery</h1>
+
+      <Modal show={preview} onHide={handlePreviewClose} dialogClassName="my-modal" size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title className="font-loader text-center">{previewTitle}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="text-center">
+        <ImagePreview file={fileToPreview}/>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handlePreviewClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <h1 className="text-center">Gallery</h1>
       <ul className="uc-list-images">
         {files.map((file) => (
           <ImageCard 
             key={file.uuid} 
             file={file} 
             deleteFile={deleteFile}
-            editFile={editFile} />
+            downloadFile={downloadFile}
+            editFile={editFile} 
+            previewImage={previewImage}
+            />
         ))}
       </ul>
     </div>
   );
 };
 
-const ImageCard = ({ file, deleteFile, editFile }) => {
+
+
+const ImageCard = ({ file, deleteFile, downloadFile, editFile, previewImage }) => {
   return (
     <li className="item">
       <div className="header">
         <span className="name">{file.original_filename}</span>
         <div className="actions">
-        <span className="icon" onClick={(image) => editFile(file)}>
+        <span className="icon" onClick={(image) => downloadFile(file)}>
             <FiDownload/>
           </span>
           <span className="icon" onClick={(image) => editFile(file)}>
@@ -112,7 +146,7 @@ const ImageCard = ({ file, deleteFile, editFile }) => {
           </span>
         </div>
       </div>
-      <div className="file">
+      <div className="file" onClick={(image) => previewImage(file)}>
         <img src={file.original_file_url} alt={file.original_filename} />
       </div>
     </li>

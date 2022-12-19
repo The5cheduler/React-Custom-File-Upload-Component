@@ -1,3 +1,6 @@
+.font-loader {
+  font-family: 'Poppins';
+}
 
 .ucare {
   margin: 1rem;
@@ -18,16 +21,18 @@
 .uc-list-images {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-gap: 10px;
+  grid-gap: 15px;
   padding: 1rem;
 }
 
 .uc-list-images > li.item {
   display: flex;
   flex-direction: column;
+  border-radius: 10px;
 }
 
 .uc-list-images > li.item .header {
+  border-radius: 10px 10px 0px 0px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -37,7 +42,11 @@
 }
 
 .uc-list-images > li.item .header .name {
+  white-space: nowrap;
   word-break: break-all;
+  overflow : hidden;
+  text-overflow: ellipsis;
+  width:60%;
 }
 
 .uc-list-images > li.item .header .actions {
@@ -51,6 +60,7 @@
 }
 
 .uc-list-images > li.item .file {
+  border-radius: 0px 0px 10px 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,11 +71,12 @@
 .uc-list-images > li.item .file > img {
   width: 200px;
   height: 200px;
-  border-radius: 50%;
+  border-radius: 5%;
 }
 
 .uc-ip-preview {
   overflow: auto;
+  width: auto;
 }
 
 .uc-ip-actions-grp {
@@ -87,6 +98,11 @@
   background-color: cornflowerblue;
   color: #ffffff;
 }
+
+.my-modal {
+  width : 90%;
+  max-width: none !important;
+} 
 
 .modal-body {
   padding: 0;
