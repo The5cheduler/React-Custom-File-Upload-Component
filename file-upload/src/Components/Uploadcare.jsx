@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { render } from 'react-dom';
 import { Widget } from "@uploadcare/react-widget";
 import FilesList from "./FilesList";
 import Alert from "react-bootstrap/Alert";

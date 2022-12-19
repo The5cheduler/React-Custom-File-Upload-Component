@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { saveAs } from 'file-saver';
+import { FiEdit, FiTrash2, FiDownload } from "react-icons/fi";
 import ProcessImage from "./ProcessImage";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { useCallback } from "react";
 
 function FilesList({ updateList }) {
   const URI = "https://api.uploadcare.com/files/";
 
   const headers = {
-    Authorization: `Uploadcare.Simple ${process.env.REACT_APP_UPLOADCARE_API_PUBLIC_KEY}:${process.env.REACT_APP_UPLOADCARE_API_SECRET_KEY}`,
+    Authorization: `Uploadcare.Simple ${process.env.REACT_APP_UPLOADCARE_API_PUBLIC_KEY}:${process.env.REACT_APP_UPLOADCARE_API_SECRET_KEY}`
   };
   const [loading, setLoading] = useState(true);
   const [files, setFiles] = useState([]);
@@ -28,6 +28,10 @@ function FilesList({ updateList }) {
         setLoading(false);
       });
   }, [updateList]);
+
+  const downloadFile = (fileId) => {
+
+  };
 
   const deleteFile = (fileId) => {
     const URI = `https://api.uploadcare.com/files/${fileId}/`;
@@ -77,7 +81,7 @@ function FilesList({ updateList }) {
           </Button>
         </Modal.Footer>
       </Modal>
-      <h1>Gallery</h1>
+      <h1 style={{}}>Gallery</h1>
       <ul className="uc-list-images">
         {files.map((file) => (
           <ImageCard 
@@ -97,6 +101,9 @@ const ImageCard = ({ file, deleteFile, editFile }) => {
       <div className="header">
         <span className="name">{file.original_filename}</span>
         <div className="actions">
+        <span className="icon" onClick={(image) => editFile(file)}>
+            <FiDownload/>
+          </span>
           <span className="icon" onClick={(image) => editFile(file)}>
             <FiEdit />
           </span>
